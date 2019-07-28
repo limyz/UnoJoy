@@ -160,7 +160,7 @@ int main(void) {
 
 	while (1) {
 		// Delay so we're not going too fast
-		_delay_ms(10);
+		_delay_ms(0.5);
 		
         // We get our data from the ATmega328p by writing which byte we
         //  want from the dataForController_t, and then wait for the
@@ -210,12 +210,19 @@ int main(void) {
 		dataToSend.startOn = 1 & (buttonData2 >> 3);
 		dataToSend.homeOn = 1 & (buttonData2 >> 4);
 		dataToSend.dpadLeftOn = 1 & (buttonData2 >> 5);
+		dataToSend.dpadUpOn = 1 & (~(buttonData2 >> 6));
+		dataToSend.dpadRightOn = 1 & (buttonData2 >> 7);
+		
+		dataToSend.dpadDownOn = 1 & (~(buttonData3 >> 0));
+		
+        /*
+		dataToSend.dpadLeftOn = 1 & (buttonData2 >> 5);
 		dataToSend.dpadUpOn = 1 & (buttonData2 >> 6);
 		dataToSend.dpadRightOn = 1 & (buttonData2 >> 7);
 		
 		dataToSend.dpadDownOn = 1 & (buttonData3 >> 0);
+		*/
 		
-        
         // Finally, we send the data out via the USB port
 		sendPS3Data(dataToSend);	
 		
